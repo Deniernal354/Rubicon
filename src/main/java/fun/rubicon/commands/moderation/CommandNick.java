@@ -3,11 +3,11 @@ package fun.rubicon.commands.moderation;
 import fun.rubicon.command.CommandCategory;
 import fun.rubicon.command.CommandHandler;
 import fun.rubicon.command.CommandManager;
-import fun.rubicon.data.PermissionLevel;
-import fun.rubicon.data.PermissionRequirements;
-import fun.rubicon.data.UserPermissions;
+import fun.rubicon.permission.PermissionRequirements;
+import fun.rubicon.permission.UserPermissions;
 import fun.rubicon.util.EmbedUtil;
 import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class CommandNick extends CommandHandler {
     public CommandNick() {
-        super(new String[]{"nick", "nickname", "name"}, CommandCategory.TOOLS, new PermissionRequirements(PermissionLevel.ADMINISTRATOR, "command.nick"), "Easily nick yourself or others", "[@User] <nickname/reset>", false);
+        super(new String[]{"nick", "nickname", "name"}, CommandCategory.TOOLS, new PermissionRequirements("command.nick", false, false), "Easily nick yourself or others", "[@User] <nickname/reset>", false);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CommandNick extends CommandHandler {
             member = message.getMember();
         String oldName = member.getEffectiveName();
         String nickname = String.join(" ", new ArrayList<>(Arrays.asList(args).subList(1, args.length))).replace(member.getEffectiveName(), "").replace("@", "");
-        if (!message.getGuild().getSelfMember().canInteract(member))
+        if (!message.getGuild().getSelfMember().canInteract(member) || !message.getGuild().getSelfMember().hasPermission(Permission.NICKNAME_MANAGE))
             return new MessageBuilder().setEmbed(EmbedUtil.error("No permission", "Sorry but Rubicon has no permission to change " + member.getAsMention() + "'s nickname").build()).build();
         if (nickname.length() > 32) {
             return new MessageBuilder().setEmbed(EmbedUtil.error("Nickname to long", "Your nickname can not be longer than 32 chars").build()).build();

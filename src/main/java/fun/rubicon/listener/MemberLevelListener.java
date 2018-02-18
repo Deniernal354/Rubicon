@@ -8,17 +8,12 @@ package fun.rubicon.listener;
 
 import fun.rubicon.sql.MemberSQL;
 import fun.rubicon.sql.UserSQL;
-import fun.rubicon.util.Colors;
-import fun.rubicon.util.Logger;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class MemberLevelListener extends ListenerAdapter {
 
@@ -60,7 +55,7 @@ public class MemberLevelListener extends ListenerAdapter {
             userSQL.set("money", (oldMoney + (currentLevel * 100)) + "");
 
             //Level Up
-            if (event.getMessage().getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_READ) && event.getMessage().getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
+            /*if (event.getMessage().getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_READ) && event.getMessage().getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
                 event.getChannel().sendMessage(new EmbedBuilder()
                         .setAuthor(event.getAuthor().getName() + " leveled up!", null, event.getAuthor().getAvatarUrl())
                         .setDescription("You are now level **" + fina + "**")
@@ -68,7 +63,7 @@ public class MemberLevelListener extends ListenerAdapter {
                         .setColor(Colors.COLOR_SECONDARY)
                         .build()
                 ).queue(message -> message.delete().queueAfter(10, TimeUnit.SECONDS));
-            }
+            }*/
         }
     }
 

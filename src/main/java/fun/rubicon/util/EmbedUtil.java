@@ -12,7 +12,6 @@ import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +37,14 @@ public class EmbedUtil {
      */
     public static EmbedBuilder success(String title, String description) {
         return embed(":white_check_mark: " + title, description).setColor(Colors.COLOR_PRIMARY);
+    }
+
+    public static EmbedBuilder premium(String title, String description) {
+        return embed(":star: " + title, description).setColor(Colors.COLOR_PREMIUM);
+    }
+
+    public static EmbedBuilder noPremium() {
+        return premium("No Premium!", "Buy premium with rubys! - `rc!premium buy`");
     }
 
     /**
